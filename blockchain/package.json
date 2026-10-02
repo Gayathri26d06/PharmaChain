@@ -1,0 +1,20 @@
+{
+  "name": "pharmachain-blockchain",
+  "version": "1.0.0",
+  "description": "Smart contracts and deployment scripts for PharmaChain Medicine Authentication System",
+  "main": "hardhat.config.cjs",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "node": "hardhat node",
+    "deploy:local": "hardhat run scripts/deploy.cjs --network localhost",
+    "deploy:hardhat": "hardhat run scripts/deploy.cjs --network hardhat"
+  },
+  "keywords": ["blockchain", "ethereum", "solidity", "hardhat", "pharmachain"],
+  "author": "PharmaChain Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.22.0"
+  }
+}

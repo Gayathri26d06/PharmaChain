@@ -1,0 +1,77 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\K.Balaji\\.gemini\\antigravity\\scratch\\pharmachain\\blockchain\\contracts\\PharmaChain.sol": {
+      "lastModificationDate": 1788362919500,
+      "contentHash": "af1890a3bbd7402540cd69c5b1d77aea",
+      "sourceName": "contracts/PharmaChain.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "PharmaChain"
+      ]
+    },
+    "E:\\College Project\\Sem 4\\Sample\\blockchain\\contracts\\PharmaChain.sol": {
+      "lastModificationDate": 1788362919500,
+      "contentHash": "af1890a3bbd7402540cd69c5b1d77aea",
+      "sourceName": "contracts/PharmaChain.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "PharmaChain"
+      ]
+    }
+  }
+}
