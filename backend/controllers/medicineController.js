@@ -285,6 +285,15 @@ const verifyMedicine = async (req, res, next) => {
     let verificationResult = "GENUINE";
     let message = "Medicine is genuine and authenticated by blockchain.";
 
+    if (!chainRecord.success || !chainRecord.data || !chainRecord.data.exists) {
+      if (dbMedicine && dbMedicine.blockchainStatus === "OFFLINE") {
+        message = "Medicine is locally verified but not authenticated on the blockchain (OFFLINE).";
+      } else {
+        verificationResult = "SUSPICIOUS";
+        message = "Suspicious medicine: Found locally but missing from the immutable blockchain ledger.";
+      }
+    }
+
     if (isRecalled) {
       verificationResult = "SUSPICIOUS";
       message = "Suspicious medicine: This batch has been officially recalled by the manufacturer.";
