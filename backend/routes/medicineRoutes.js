@@ -7,10 +7,10 @@ const {
   verifyMedicine,
   getDashboardStats
 } = require("../controllers/medicineController");
-const { protect, authorize } = require("../middleware/authMiddleware");
+const { protect, authorize, optionalAuth } = require("../middleware/authMiddleware");
 
-// Public verification route (Accessible without login)
-router.get("/verify/:medicineId", verifyMedicine);
+// Public verification route (Accessible without login, but can track user if logged in)
+router.get("/verify/:medicineId", optionalAuth, verifyMedicine);
 
 // Protected routes
 router.use(protect);

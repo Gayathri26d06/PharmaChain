@@ -22,11 +22,11 @@ export const QRScanner = ({ onScanSuccess }) => {
     return trimmed;
   };
 
-  const handleScanResult = (decodedText) => {
+  const handleScanResult = async (decodedText) => {
     const medicineId = parseMedicineId(decodedText);
     if (medicineId && onScanSuccess) {
       setIsProcessing(true);
-      stopScanner();
+      await stopScanner();
       onScanSuccess(medicineId);
     }
   };
@@ -124,24 +124,31 @@ export const QRScanner = ({ onScanSuccess }) => {
       </div>
 
       {/* Scanner Viewport */}
-      <div
-        id={scannerRegionId}
-        style={{
-          width: "100%",
-          maxWidth: "360px",
-          minHeight: "280px",
-          backgroundColor: "#0f172a",
-          borderRadius: "12px",
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          border: "2px dashed #38bdf8",
-          position: "relative"
-        }}
-      >
+      <div style={{ position: "relative", width: "100%", maxWidth: "360px", minHeight: "280px", margin: "0 auto" }}>
+        <div
+          id={scannerRegionId}
+          style={{
+            width: "100%",
+            height: "100%",
+            minHeight: "280px",
+            backgroundColor: "#0f172a",
+            borderRadius: "12px",
+            overflow: "hidden",
+            border: "2px dashed #38bdf8"
+          }}
+        ></div>
         {!scannerActive && (
-          <div style={{ color: "#94a3b8", textAlign: "center", padding: "1.5rem" }}>
+          <div style={{ 
+            position: "absolute", 
+            top: 0, left: 0, right: 0, bottom: 0, 
+            display: "flex", 
+            flexDirection: "column",
+            alignItems: "center", 
+            justifyContent: "center",
+            color: "#94a3b8", 
+            padding: "1.5rem",
+            pointerEvents: "none"
+          }}>
             <Camera size={44} color="#38bdf8" style={{ margin: "0 auto 0.75rem auto", opacity: 0.8 }} />
             <p style={{ fontSize: "0.88rem", fontWeight: 500 }}>Camera currently standby</p>
             <p style={{ fontSize: "0.76rem", marginTop: "0.25rem" }}>Click Start Camera to initialize live video stream</p>

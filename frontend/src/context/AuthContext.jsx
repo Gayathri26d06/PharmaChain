@@ -35,6 +35,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const googleLogin = async (credential) => {
+    setLoading(true);
+    try {
+      const data = await authService.googleLogin(credential);
+      setUser(data.user);
+      setToken(data.token);
+      return data;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const register = async (userData) => {
     setLoading(true);
     try {
@@ -61,6 +73,7 @@ export const AuthProvider = ({ children }) => {
     isCustomer: user?.role === "customer",
     loading,
     login,
+    googleLogin,
     register,
     logout
   };

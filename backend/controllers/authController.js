@@ -1,5 +1,8 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Generate signed JWT Token
 const generateToken = (id) => {
@@ -163,8 +166,64 @@ const getProfile = async (req, res, next) => {
   }
 };
 
+/**
+ * @desc    Authenticate user with Google & get JWT token
+ * @route   POST /api/auth/google
+ * @access  Public
+ */
+const googleLogin = async (req, res, next) => {
+  try {
+    const { credential } = req.body;
+    if (!credential) {
+      return res.status(400).json({ success: false, message: "Google credential required" });
+    }
+
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    
+    const payload = ticket.getPayload();
+    const { sub: googleId, email, name } = payload;
+
+    let user = await User.findOne({ email: email.toLowerCase().trim() });
+    
+    if (!user) {
+      user = await User.create({
+        name: name,
+        email: email.toLowerCase().trim(),
+        googleId: googleId,
+        role: "customer"
+      });
+    } else if (!user.googleId) {
+      user.googleId = googleId;
+      await user.save();
+    }
+
+    const token = generateToken(user._id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Google Login successful",
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        walletAddress: user.walletAddress,
+        createdAt: user.createdAt
+      }
+    });
+  } catch (error) {
+    console.error("Google Auth Error:", error);
+    return res.status(401).json({ success: false, message: "Google authentication failed" });
+  }
+};
+
 module.exports = {
   register,
   login,
-  getProfile
+  getProfile,
+  googleLogin
 };

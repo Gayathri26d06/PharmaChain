@@ -51,9 +51,7 @@ class BlockchainService {
         success: false,
         error: error.reason || error.message,
         isOffline,
-        status: isOffline ? "OFFLINE" : "FAILED",
-        // Fallback simulation hash for dev demonstration if blockchain node is not yet started
-        transactionHash: "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("")
+        status: isOffline ? "OFFLINE" : "FAILED"
       };
     }
   }

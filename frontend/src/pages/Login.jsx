@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { LogIn, Lock, Mail, AlertCircle, Sparkles, Building, UserCheck } from "lucide-react";
+import { GoogleLogin } from '@react-oauth/google';
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ export const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth();
+  const { login, googleLogin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,20 +43,16 @@ export const Login = () => {
     }
   };
 
-  // Quick fill helper for presentation demonstration
-  const quickFill = (role) => {
-    if (role === "manufacturer") {
-      setFormData({
-        email: "manufacturer@pharmachain.com",
-        password: "Password123"
-      });
-    } else {
-      setFormData({
-        email: "customer@pharmachain.com",
-        password: "Password123"
-      });
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      setLoading(true);
+      await googleLogin(credentialResponse.credential);
+      navigate(from, { replace: true });
+    } catch (err) {
+      setError("Google authentication failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    setError("");
   };
 
   return (
@@ -71,29 +68,18 @@ export const Login = () => {
           </p>
         </div>
 
-        {/* Demo Credentials Helper */}
-        <div style={{ background: "#f8fafc", padding: "0.85rem", borderRadius: "10px", border: "1px solid #e2e8f0", marginBottom: "1.5rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontSize: "0.78rem", fontWeight: 700, color: "#475569", textTransform: "uppercase" }}>
-            <Sparkles size={13} color="#0284c7" /> One-Click Demo Accounts
-          </div>
-          <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
-            <button
-              type="button"
-              onClick={() => quickFill("manufacturer")}
-              className="btn btn-secondary btn-sm"
-              style={{ flex: 1, fontSize: "0.76rem" }}
-            >
-              <Building size={13} /> Manufacturer
-            </button>
-            <button
-              type="button"
-              onClick={() => quickFill("customer")}
-              className="btn btn-secondary btn-sm"
-              style={{ flex: 1, fontSize: "0.76rem" }}
-            >
-              <UserCheck size={13} /> Customer
-            </button>
-          </div>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem" }}>
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setError("Google Login was unsuccessful")}
+            useOneTap
+          />
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", marginBottom: "1.5rem" }}>
+          <div style={{ flex: 1, height: "1px", backgroundColor: "#e2e8f0" }}></div>
+          <span style={{ padding: "0 10px", color: "#94a3b8", fontSize: "0.85rem", fontWeight: 500 }}>OR</span>
+          <div style={{ flex: 1, height: "1px", backgroundColor: "#e2e8f0" }}></div>
         </div>
 
         {error && (

@@ -64,4 +64,19 @@ const authorize = (...roles) => {
   };
 };
 
-module.exports = { protect, authorize };
+// Middleware to optionally populate user if token is present
+const optionalAuth = async (req, res, next) => {
+  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || "pharmachain_jwt_secure_secret_key_2026_production_grade");
+      const user = await User.findById(decoded.id).select("-password");
+      if (user) req.user = user;
+    } catch (error) {
+      // Ignore errors for optional auth
+    }
+  }
+  next();
+};
+
+module.exports = { protect, authorize, optionalAuth };

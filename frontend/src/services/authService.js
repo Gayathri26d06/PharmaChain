@@ -21,6 +21,16 @@ export const authService = {
     return response.data;
   },
 
+  // Google Login
+  async googleLogin(credential) {
+    const response = await api.post("/auth/google", { credential });
+    if (response.data.token) {
+      localStorage.setItem("pharmachain_token", response.data.token);
+      localStorage.setItem("pharmachain_user", JSON.stringify(response.data.user));
+    }
+    return response.data;
+  },
+
   // Get current user profile
   async getProfile() {
     const response = await api.get("/auth/profile");

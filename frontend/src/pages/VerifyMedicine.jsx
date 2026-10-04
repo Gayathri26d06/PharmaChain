@@ -361,7 +361,7 @@ export const VerifyMedicine = () => {
               <div>
                 <span style={{ color: "#64748b", display: "block", fontSize: "0.8rem", marginBottom: "2px" }}>Transaction Hash:</span>
                 <div className="hash-pill" style={{ wordBreak: "break-all" }}>
-                  {verificationData.medicine?.blockchainTransactionHash || "0x5173f4e2298642a8b941cd9e0b12638a4f912e5c70281b3749de"}
+                  {verificationData.medicine?.blockchainTransactionHash}
                 </div>
               </div>
 
@@ -369,14 +369,14 @@ export const VerifyMedicine = () => {
                 <div>
                   <span style={{ color: "#64748b", display: "block", fontSize: "0.8rem", marginBottom: "2px" }}>Registering Wallet Address:</span>
                   <div className="hash-pill" style={{ fontSize: "0.78rem" }}>
-                    {verificationData.blockchainProof?.registeredBy || "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"}
+                    {verificationData.blockchainProof?.registeredBy}
                   </div>
                 </div>
 
                 <div>
                   <span style={{ color: "#64748b", display: "block", fontSize: "0.8rem", marginBottom: "2px" }}>Mined Block:</span>
                   <span style={{ fontWeight: 600, color: "#0f172a" }}>
-                    #{verificationData.blockchainProof?.registeredBlock || "1"}
+                    #{verificationData.blockchainProof?.registeredBlock}
                   </span>
                 </div>
 

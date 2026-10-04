@@ -9,6 +9,12 @@ const Medicine = require("./models/Medicine");
 const VerificationLog = require("./models/VerificationLog");
 
 const seedDatabase = async () => {
+  const env = process.env.NODE_ENV || "development";
+  if (env !== "development" && env !== "test") {
+    console.error("[Seed Error] Seeding is only permitted in development or test environments.");
+    process.exit(1);
+  }
+
   const mongoUri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/pharmachain";
 
   try {
@@ -61,9 +67,7 @@ const seedDatabase = async () => {
       expiryDate: new Date("2028-06-30"),
       quantity: 5000,
       description: "Broad-spectrum antibacterial capsules for bacterial respiratory and systemic infections.",
-      blockchainTransactionHash: "0x8f32c91b58a14d2e9876543210fedcba9876543210fedcba8f32c91b58a14d2e",
-      blockchainStatus: "COMMITTED",
-      blockchainBlockNumber: 42,
+      blockchainStatus: "OFFLINE",
       status: "GENUINE",
       createdBy: manufacturer._id
     });
@@ -78,9 +82,7 @@ const seedDatabase = async () => {
       expiryDate: new Date("2024-05-01"), // Expired
       quantity: 1200,
       description: "Analgesic and antipyretic syrup formulation.",
-      blockchainTransactionHash: "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
-      blockchainStatus: "COMMITTED",
-      blockchainBlockNumber: 12,
+      blockchainStatus: "OFFLINE",
       status: "EXPIRED",
       createdBy: manufacturer._id
     });
@@ -95,9 +97,7 @@ const seedDatabase = async () => {
       expiryDate: new Date("2027-12-31"),
       quantity: 300,
       description: "Macrolide antibiotic tablets under manufacturer quality audit.",
-      blockchainTransactionHash: "0x9876543210abcdef9876543210abcdef9876543210abcdef9876543210abcdef",
-      blockchainStatus: "COMMITTED",
-      blockchainBlockNumber: 45,
+      blockchainStatus: "OFFLINE",
       status: "SUSPICIOUS",
       createdBy: manufacturer._id
     });

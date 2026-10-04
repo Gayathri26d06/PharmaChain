@@ -73,6 +73,14 @@ const addMedicine = async (req, res, next) => {
       expiryDate: expDate.toISOString()
     });
 
+    if (!chainResult.success) {
+      return res.status(502).json({
+        success: false,
+        message: "Failed to record medicine on the blockchain ledger. Registration aborted.",
+        error: chainResult.error
+      });
+    }
+
     const isExpired = new Date() > expDate;
     const initialStatus = isExpired ? "EXPIRED" : "GENUINE";
 
@@ -369,8 +377,18 @@ const getDashboardStats = async (req, res, next) => {
       .sort({ createdAt: -1 })
       .limit(5);
 
+    let verifFilter = {};
+    if (req.user && req.user.role === "customer") {
+      verifFilter.scannedBy = req.user._id;
+    } else if (req.user && req.user.role === "manufacturer") {
+      // Find all medicine IDs created by this manufacturer
+      const manufacturerMedicines = await Medicine.find({ createdBy: req.user._id }).select("medicineId");
+      const medicineIds = manufacturerMedicines.map(m => m.medicineId);
+      verifFilter.medicineId = { $in: medicineIds };
+    }
+
     // Recent verifications
-    const recentVerifications = await VerificationLog.find()
+    const recentVerifications = await VerificationLog.find(verifFilter)
       .sort({ createdAt: -1 })
       .limit(6);
 
