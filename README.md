@@ -177,9 +177,6 @@ cd C:\Users\K.Balaji\.gemini\antigravity\scratch\pharmachain\backend
 # Install dependencies
 npm install
 
-# (Optional) Seed demo users and baseline medicines
-npm run seed
-
 # Start the backend server
 npm run dev
 ```
@@ -205,38 +202,6 @@ Frontend will run on: **`http://localhost:5173`**
 
 ---
 
-## 5. Demo Accounts & Testing Guide
-
-### Pre-configured Test Accounts
-
-| Role | Email | Password | Permissions |
-| :--- | :--- | :--- | :--- |
-| **Manufacturer** | `manufacturer@pharmachain.com` | `Password123` | Register medicines, mint blockchain tokens, download QR codes |
-| **Customer** | `customer@pharmachain.com` | `Password123` | Verify medicines, scan QR codes, view blockchain provenance |
-
-*(You can also use the "One-Click Demo Accounts" buttons on the Login page).*
-
----
-
-### Verification Scenarios to Test
-
-1. **Genuine Medicine Verification**:
-   - Medicine ID: `MED-2026-A8F92K`
-   - Result: **GENUINE** (Green badge, manufacturer details, blockchain transaction hash, block number).
-
-2. **Expired Medicine Verification**:
-   - Medicine ID: `MED-2024-EXP01X`
-   - Result: **EXPIRED** (Amber warning, expiry date passed warning).
-
-3. **Suspicious Medicine Verification**:
-   - Medicine ID: `MED-2026-SUSP99`
-   - Result: **SUSPICIOUS** (Orange alert, anomaly flag).
-
-4. **Counterfeit / Non-existent Medicine Verification**:
-   - Medicine ID: `MED-FAKE-999999`
-   - Result: **INVALID / COUNTERFEIT** (Red alert: *"Invalid or counterfeit medicine. This Medicine ID was never registered on the blockchain ledger."*).
-
----
 
 ## 6. Smart Contract Specifications (`PharmaChain.sol`)
 

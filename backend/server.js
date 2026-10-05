@@ -13,6 +13,7 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const authRoutes = require("./routes/authRoutes");
 const medicineRoutes = require("./routes/medicineRoutes");
 const blockchainRoutes = require("./routes/blockchainRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 // Initialize Database connection
 connectDB();
@@ -52,6 +53,7 @@ app.get("/api/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/medicines", medicineRoutes);
 app.use("/api/blockchain", blockchainRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Error Handling Middlewares
 app.use(notFound);

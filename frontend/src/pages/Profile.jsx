@@ -78,46 +78,6 @@ export const Profile = () => {
               </div>
             </div>
 
-            {/* Role Capabilities Box */}
-            <div style={{ marginTop: "1.75rem", padding: "1.25rem", backgroundColor: "#f8fafc", borderRadius: "10px", border: "1px solid #e2e8f0" }}>
-              <h4 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "0.75rem", color: "#0f172a" }}>
-                Role Permissions & Capabilities
-              </h4>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.5rem", fontSize: "0.85rem", color: "#475569" }}>
-                {isManufacturer ? (
-                  <>
-                    <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <CheckCircle2 size={16} color="#10b981" />
-                      <span>Permission to mint new medicine batches on the Ethereum blockchain.</span>
-                    </li>
-                    <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <CheckCircle2 size={16} color="#10b981" />
-                      <span>Permission to generate, print, and download serialized optical QR codes.</span>
-                    </li>
-                    <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <CheckCircle2 size={16} color="#10b981" />
-                      <span>Authorized to inspect manufactured batch telemetry and scan alerts.</span>
-                    </li>
-                  </>
-                ) : (
-                  <>
-                    <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <CheckCircle2 size={16} color="#10b981" />
-                      <span>Permission to verify medicine authenticity using browser camera scanner.</span>
-                    </li>
-                    <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <CheckCircle2 size={16} color="#10b981" />
-                      <span>Direct read-only access to Ethereum smart contract records and proof hashes.</span>
-                    </li>
-                    <li style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <CheckCircle2 size={16} color="#10b981" />
-                      <span>Real-time detection of counterfeit, expired, or cloned packaging.</span>
-                    </li>
-                  </>
-                )}
-              </ul>
-            </div>
-
             <div style={{ marginTop: "1.75rem", paddingTop: "1.25rem", borderTop: "1px solid #f1f5f9" }}>
               <button
                 type="button"

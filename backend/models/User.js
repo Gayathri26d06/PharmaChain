@@ -37,10 +37,20 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: {
-        values: ["manufacturer", "customer"],
-        message: "Role must be either 'manufacturer' or 'customer'"
+        values: ["admin", "manufacturer", "customer"],
+        message: "Role must be either 'admin', 'manufacturer' or 'customer'"
       },
       default: "customer"
+    },
+    manufacturerStatus: {
+      type: String,
+      enum: ["not_applicable", "pending", "approved", "rejected"],
+      default: "not_applicable"
+    },
+    companyDetails: {
+      companyName: String,
+      registrationNumber: String,
+      address: String
     },
     walletAddress: {
       type: String,

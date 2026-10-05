@@ -75,68 +75,17 @@ export const Register = () => {
         )}
 
         <form onSubmit={handleSubmit}>
-          {/* Role Selector Tabs */}
-          <div className="form-group">
-            <label className="form-label">Account Role</label>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
-              <button
-                type="button"
-                onClick={() => setFormData((prev) => ({ ...prev, role: "manufacturer" }))}
-                style={{
-                  padding: "0.75rem",
-                  borderRadius: "8px",
-                  border: formData.role === "manufacturer" ? "2px solid #0284c7" : "1px solid #cbd5e1",
-                  backgroundColor: formData.role === "manufacturer" ? "#e0f2fe" : "#ffffff",
-                  color: formData.role === "manufacturer" ? "#0369a1" : "#475569",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.5rem"
-                }}
-              >
-                <Building size={16} /> Manufacturer
-              </button>
 
-              <button
-                type="button"
-                onClick={() => setFormData((prev) => ({ ...prev, role: "customer" }))}
-                style={{
-                  padding: "0.75rem",
-                  borderRadius: "8px",
-                  border: formData.role === "customer" ? "2px solid #0284c7" : "1px solid #cbd5e1",
-                  backgroundColor: formData.role === "customer" ? "#e0f2fe" : "#ffffff",
-                  color: formData.role === "customer" ? "#0369a1" : "#475569",
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.5rem"
-                }}
-              >
-                <UserCheck size={16} /> Customer
-              </button>
-            </div>
-            <span className="form-helper" style={{ marginTop: "4px" }}>
-              {formData.role === "manufacturer"
-                ? "Can register new medicines, mint smart contract tokens, and generate unit QR codes."
-                : "Can verify medicine authenticity, scan packaging QR codes, and view provenance."}
-            </span>
-          </div>
 
           <div className="form-group">
-            <label className="form-label" htmlFor="name">
-              {formData.role === "manufacturer" ? "Company / Facility Name" : "Full Name"}
-            </label>
+            <label className="form-label" htmlFor="name">Full Name</label>
             <input
               id="name"
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder={formData.role === "manufacturer" ? "e.g. Novartis Pharmaceuticals Ltd" : "e.g. John Doe"}
+              placeholder="e.g. John Doe"
               className="form-input"
               required
             />
@@ -186,22 +135,6 @@ export const Register = () => {
             </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="walletAddress">
-              Ethereum Wallet Address <span style={{ color: "#94a3b8", fontWeight: 400 }}>(Optional)</span>
-            </label>
-            <input
-              id="walletAddress"
-              type="text"
-              name="walletAddress"
-              value={formData.walletAddress}
-              onChange={handleChange}
-              placeholder="0x..."
-              className="form-input"
-              style={{ fontFamily: "var(--font-mono)", fontSize: "0.85rem" }}
-            />
-            <span className="form-helper">Leave blank to use default backend managed relayer wallet.</span>
-          </div>
 
           <button
             type="submit"
@@ -212,7 +145,6 @@ export const Register = () => {
             {loading ? "Creating Account..." : "Complete Registration"}
           </button>
         </form>
-
         <div style={{ marginTop: "1.5rem", textAlign: "center", fontSize: "0.88rem", color: "#64748b" }}>
           Already have an account?{" "}
           <Link to="/login" style={{ fontWeight: 600, color: "#0284c7" }}>

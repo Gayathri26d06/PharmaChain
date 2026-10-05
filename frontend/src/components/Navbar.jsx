@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { ShieldCheck, PlusCircle, LayoutDashboard, Box, User, LogOut, LogIn, UserPlus, Pill, Wallet } from "lucide-react";
+import { ShieldCheck, PlusCircle, LayoutDashboard, Box, User, LogOut, LogIn, UserPlus, Pill, Wallet, ArrowLeft } from "lucide-react";
 
 export const Navbar = () => {
   const { user, isAuthenticated, logout, isManufacturer } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [walletAccount, setWalletAccount] = useState("");
+  
+  const isHomePage = location.pathname === "/" || location.pathname === "/customer";
 
   const handleLogout = () => {
     logout();
@@ -50,64 +53,11 @@ export const Navbar = () => {
         </Link>
 
         {/* Navigation Links */}
-        <nav>
-          <ul className="nav-links">
-            <li>
-              <NavLink to="/" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                Home
-              </NavLink>
-            </li>
 
-            <li>
-              <NavLink to="/verify" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                <ShieldCheck size={16} /> Verify Medicine
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink to="/blockchain" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                <Box size={16} /> Blockchain
-              </NavLink>
-            </li>
-
-            {isAuthenticated && (
-              <li>
-                <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                  <LayoutDashboard size={16} /> Dashboard
-                </NavLink>
-              </li>
-            )}
-
-            {isAuthenticated && isManufacturer && (
-              <>
-                <li>
-                  <NavLink to="/add-medicine" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                    <PlusCircle size={16} /> Add Medicine
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/medicines" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-                    My Medicines
-                  </NavLink>
-                </li>
-              </>
-            )}
-          </ul>
-        </nav>
 
         {/* Auth / User Actions */}
         <div className="nav-auth">
-          {/* Optional MetaMask Button */}
-          <button
-            type="button"
-            onClick={connectMetaMask}
-            className="btn btn-secondary btn-sm"
-            style={{ fontSize: "0.78rem", padding: "0.35rem 0.65rem" }}
-            title="Connect MetaMask Wallet (Optional)"
-          >
-            <Wallet size={14} color={walletAccount ? "#10b981" : "#64748b"} />
-            {walletAccount ? truncatedWallet : "Web3 Wallet"}
-          </button>
+
 
           {isAuthenticated ? (
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
@@ -144,12 +94,11 @@ export const Navbar = () => {
             </div>
           ) : (
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <Link to="/login" className="btn btn-secondary btn-sm">
-                <LogIn size={14} /> Login
-              </Link>
-              <Link to="/register" className="btn btn-primary btn-sm">
-                <UserPlus size={14} /> Register
-              </Link>
+              {location.pathname !== "/" && (
+                <Link to="/" className="btn btn-secondary btn-sm">
+                  <ArrowLeft size={14} /> Welcome Page
+                </Link>
+              )}
             </div>
           )}
         </div>

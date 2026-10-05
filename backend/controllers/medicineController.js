@@ -1,5 +1,6 @@
 const Medicine = require("../models/Medicine");
 const VerificationLog = require("../models/VerificationLog");
+const AuditLog = require("../models/AuditLog");
 const blockchainService = require("../services/blockchainService");
 const crypto = require("crypto");
 
@@ -99,6 +100,12 @@ const addMedicine = async (req, res, next) => {
       blockchainBlockNumber: chainResult.blockNumber || null,
       status: initialStatus,
       createdBy: req.user._id
+    });
+
+    await AuditLog.create({
+      action: "MEDICINE_REGISTERED",
+      details: `Manufacturer ${manufacturer} registered medicine: ${name} (Batch: ${batchNumber})`,
+      performedBy: req.user._id
     });
 
     const frontendBaseUrl = process.env.FRONTEND_URL || "http://localhost:5173";

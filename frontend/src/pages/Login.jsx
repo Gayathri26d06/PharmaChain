@@ -55,6 +55,7 @@ export const Login = () => {
     }
   };
 
+
   return (
     <div style={{ maxWidth: "460px", margin: "3rem auto", padding: "0 1.25rem" }}>
       <div className="card">
@@ -81,6 +82,8 @@ export const Login = () => {
           <span style={{ padding: "0 10px", color: "#94a3b8", fontSize: "0.85rem", fontWeight: 500 }}>OR</span>
           <div style={{ flex: 1, height: "1px", backgroundColor: "#e2e8f0" }}></div>
         </div>
+
+
 
         {error && (
           <div style={{ padding: "0.75rem", backgroundColor: "#fef2f2", border: "1px solid #fecaca", borderRadius: "8px", color: "#991b1b", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.25rem" }}>
@@ -130,12 +133,7 @@ export const Login = () => {
           </button>
         </form>
 
-        <div style={{ marginTop: "1.5rem", textAlign: "center", fontSize: "0.88rem", color: "#64748b" }}>
-          Don't have an account?{" "}
-          <Link to="/register" style={{ fontWeight: 600, color: "#0284c7" }}>
-            Register here
-          </Link>
-        </div>
+
       </div>
     </div>
   );

@@ -46,9 +46,9 @@ const register = async (req, res, next) => {
       });
     }
 
-    const assignedRole = role && ["manufacturer", "customer"].includes(role.toLowerCase())
-      ? role.toLowerCase()
-      : "customer";
+    // Public registration ALWAYS defaults to customer. Never trust frontend role.
+    const assignedRole = "customer";
+    const manufacturerStatus = "not_applicable";
 
     // Check if user already exists
     const userExists = await User.findOne({ email: email.toLowerCase().trim() });
@@ -65,6 +65,7 @@ const register = async (req, res, next) => {
       email: email.toLowerCase().trim(),
       password,
       role: assignedRole,
+      manufacturerStatus,
       walletAddress: walletAddress || ""
     });
 
@@ -79,6 +80,7 @@ const register = async (req, res, next) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        manufacturerStatus: user.manufacturerStatus,
         walletAddress: user.walletAddress,
         createdAt: user.createdAt
       }
@@ -133,6 +135,7 @@ const login = async (req, res, next) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        manufacturerStatus: user.manufacturerStatus,
         walletAddress: user.walletAddress,
         createdAt: user.createdAt
       }
@@ -193,7 +196,8 @@ const googleLogin = async (req, res, next) => {
         name: name,
         email: email.toLowerCase().trim(),
         googleId: googleId,
-        role: "customer"
+        role: "customer",
+        manufacturerStatus: "not_applicable"
       });
     } else if (!user.googleId) {
       user.googleId = googleId;
@@ -211,6 +215,7 @@ const googleLogin = async (req, res, next) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        manufacturerStatus: user.manufacturerStatus,
         walletAddress: user.walletAddress,
         createdAt: user.createdAt
       }
@@ -220,6 +225,7 @@ const googleLogin = async (req, res, next) => {
     return res.status(401).json({ success: false, message: "Google authentication failed" });
   }
 };
+
 
 module.exports = {
   register,

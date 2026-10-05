@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import blockchainService from "../services/blockchainService";
 import BlockchainRecord from "../components/BlockchainRecord";
+import Sidebar from "../components/Sidebar";
 import { Box, RefreshCw, Cpu, CheckCircle2, Search, Terminal, ExternalLink } from "lucide-react";
 
 export const BlockchainRecords = () => {
@@ -54,10 +55,13 @@ export const BlockchainRecords = () => {
   };
 
   return (
-    <div style={{ maxWidth: "1100px", margin: "2rem auto", padding: "0 1.25rem" }}>
-      {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem", marginBottom: "2rem" }}>
-        <div>
+    <div className="dashboard-layout">
+      <Sidebar />
+      <main className="dashboard-content">
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+          {/* Header */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem", marginBottom: "2rem" }}>
+            <div>
           <h1 style={{ fontSize: "1.85rem", fontWeight: 800, display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <Box size={28} color="#0284c7" />
             Ethereum Blockchain Ledger
@@ -186,6 +190,8 @@ export const BlockchainRecords = () => {
           </div>
         )}
       </div>
+        </div>
+      </main>
     </div>
   );
 };

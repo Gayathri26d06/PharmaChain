@@ -19,9 +19,14 @@ import {
   ExternalLink,
   Layers
 } from "lucide-react";
+import AdminDashboard from "./AdminDashboard";
 
 export const Dashboard = () => {
   const { user, isManufacturer } = useAuth();
+  
+  if (user?.role === "admin") {
+    return <AdminDashboard />;
+  }
   const [stats, setStats] = useState({
     totalMedicines: 0,
     genuineMedicines: 0,
@@ -50,7 +55,10 @@ export const Dashboard = () => {
     } catch (err) {
       console.warn("Failed to load dashboard data:", err);
     } finally {
-      setLoading(false);
+      // Small artificial delay so the user can see the refresh spinner
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
   };
 

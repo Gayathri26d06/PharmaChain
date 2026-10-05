@@ -8,9 +8,9 @@ import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 // Pages
+import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import AddMedicine from "./pages/AddMedicine";
 import MyMedicines from "./pages/MyMedicines";
@@ -27,9 +27,9 @@ function App() {
           <div className="main-content">
             <Routes>
               {/* Public Routes */}
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Landing />} />
+              <Route path="/customer" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
               <Route path="/verify" element={<VerifyMedicine />} />
               <Route path="/verify/:id" element={<VerifyMedicine />} />
               <Route path="/blockchain" element={<BlockchainRecords />} />

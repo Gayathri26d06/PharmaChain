@@ -60,6 +60,14 @@ const authorize = (...roles) => {
         message: `Role '${req.user.role}' is not authorized to access this resource`
       });
     }
+
+    if (req.user.role === "manufacturer" && req.user.manufacturerStatus !== "approved") {
+      return res.status(403).json({
+        success: false,
+        message: "Your manufacturer account is pending approval or rejected."
+      });
+    }
+
     next();
   };
 };

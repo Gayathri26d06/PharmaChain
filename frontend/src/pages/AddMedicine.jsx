@@ -66,9 +66,6 @@ export const AddMedicine = () => {
             <h1 style={{ fontSize: "1.75rem", fontWeight: 800 }}>
               Register New Medicine
             </h1>
-            <p style={{ color: "#64748b", fontSize: "0.92rem", marginTop: "0.25rem" }}>
-              Mint an immutable pharmaceutical record to the Ethereum blockchain and generate verification QR codes
-            </p>
           </div>
 
           {error && (

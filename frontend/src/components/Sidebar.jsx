@@ -9,7 +9,12 @@ import {
   Box,
   User,
   ShieldAlert,
-  LogOut
+  LogOut,
+  Home,
+  Users,
+  Database,
+  Activity,
+  ClipboardList
 } from "lucide-react";
 
 export const Sidebar = () => {
@@ -19,14 +24,18 @@ export const Sidebar = () => {
     <aside className="sidebar">
       <div className="sidebar-heading">Navigation</div>
       <nav className="sidebar-nav">
-        <NavLink
-          to="/dashboard"
-          end
-          className={({ isActive }) => (isActive ? "sidebar-link active" : "sidebar-link")}
-        >
-          <LayoutDashboard size={18} />
-          <span>Dashboard</span>
-        </NavLink>
+
+
+        {user && (
+          <NavLink
+            to="/dashboard"
+            end
+            className={({ isActive }) => (isActive && (!window.location.search || window.location.search.includes("tab=stats")) ? "sidebar-link active" : "sidebar-link")}
+          >
+            <LayoutDashboard size={18} />
+            <span>Dashboard</span>
+          </NavLink>
+        )}
 
         {isManufacturer ? (
           <>
@@ -46,6 +55,31 @@ export const Sidebar = () => {
               <span>My Medicines</span>
             </NavLink>
           </>
+        ) : user?.role === "admin" ? (
+          <>
+            <NavLink
+              to="/dashboard?tab=manufacturers"
+              className={({ isActive }) => (isActive && window.location.search.includes("manufacturers") ? "sidebar-link active" : "sidebar-link")}
+            >
+              <Users size={18} />
+              <span>Manufacturer Mgmt</span>
+            </NavLink>
+            <NavLink
+              to="/dashboard?tab=medicines"
+              className={({ isActive }) => (isActive && window.location.search.includes("medicines") ? "sidebar-link active" : "sidebar-link")}
+            >
+              <Database size={18} />
+              <span>Medicine Records</span>
+            </NavLink>
+
+            <NavLink
+              to="/dashboard?tab=audit"
+              className={({ isActive }) => (isActive && window.location.search.includes("audit") ? "sidebar-link active" : "sidebar-link")}
+            >
+              <ClipboardList size={18} />
+              <span>Audit Logs</span>
+            </NavLink>
+          </>
         ) : (
           <NavLink
             to="/verify"
@@ -56,45 +90,51 @@ export const Sidebar = () => {
           </NavLink>
         )}
 
-        <NavLink
-          to="/blockchain"
-          className={({ isActive }) => (isActive ? "sidebar-link active" : "sidebar-link")}
-        >
-          <Box size={18} />
-          <span>Blockchain Ledger</span>
-        </NavLink>
+        {user && (
+          <NavLink
+            to="/blockchain"
+            className={({ isActive }) => (isActive ? "sidebar-link active" : "sidebar-link")}
+          >
+            <Box size={18} />
+            <span>Blockchain Ledger</span>
+          </NavLink>
+        )}
 
-        <NavLink
-          to="/profile"
-          className={({ isActive }) => (isActive ? "sidebar-link active" : "sidebar-link")}
-        >
-          <User size={18} />
-          <span>User Profile</span>
-        </NavLink>
+        {user && (
+          <NavLink
+            to="/profile"
+            className={({ isActive }) => (isActive ? "sidebar-link active" : "sidebar-link")}
+          >
+            <User size={18} />
+            <span>User Profile</span>
+          </NavLink>
+        )}
       </nav>
 
-      <div style={{ marginTop: "auto", paddingTop: "1.5rem", borderTop: "1px solid #e2e8f0" }}>
-        <div style={{ padding: "0.75rem", backgroundColor: "#f8fafc", borderRadius: "8px", border: "1px solid #e2e8f0", marginBottom: "0.75rem" }}>
-          <div style={{ fontSize: "0.72rem", color: "#64748b", textTransform: "uppercase", fontWeight: 700 }}>
-            Session Role
+      {user && (
+        <div style={{ marginTop: "auto", paddingTop: "1.5rem", borderTop: "1px solid #e2e8f0" }}>
+          <div style={{ padding: "0.75rem", backgroundColor: "#f8fafc", borderRadius: "8px", border: "1px solid #e2e8f0", marginBottom: "0.75rem" }}>
+            <div style={{ fontSize: "0.72rem", color: "#64748b", textTransform: "uppercase", fontWeight: 700 }}>
+              Session Role
+            </div>
+            <div style={{ fontSize: "0.88rem", fontWeight: 700, color: "#0f172a", textTransform: "capitalize", marginTop: "2px" }}>
+              {user.role}
+            </div>
+            <div style={{ fontSize: "0.74rem", color: "#0284c7", marginTop: "4px" }}>
+              Hardhat Chain ID: 31337
+            </div>
           </div>
-          <div style={{ fontSize: "0.88rem", fontWeight: 700, color: "#0f172a", textTransform: "capitalize", marginTop: "2px" }}>
-            {user?.role}
-          </div>
-          <div style={{ fontSize: "0.74rem", color: "#0284c7", marginTop: "4px" }}>
-            Hardhat Chain ID: 31337
-          </div>
-        </div>
 
-        <button
-          type="button"
-          onClick={logout}
-          className="btn btn-secondary btn-sm"
-          style={{ width: "100%", justifyContent: "flex-start" }}
-        >
-          <LogOut size={16} /> Sign Out
-        </button>
-      </div>
+          <button
+            type="button"
+            onClick={logout}
+            className="btn btn-secondary btn-sm"
+            style={{ width: "100%", justifyContent: "flex-start" }}
+          >
+            <LogOut size={16} /> Sign Out
+          </button>
+        </div>
+      )}
     </aside>
   );
 };
